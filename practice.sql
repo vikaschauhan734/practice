@@ -35,3 +35,24 @@ SELECT Product.product_name, Sales.year, Sales.price
 FROM Sales
 JOIN Product
 ON Sales.product_id = Product.product_id;
+
+-- Problem 8
+SELECT Visits.customer_id, COUNT(Visits.visit_id) AS count_no_trans
+FROM Visits
+FULL OUTER JOIN Transactions
+ON Visits.visit_id = Transactions.visit_id
+WHERE transaction_id IS NULL
+GROUP BY Visits.customer_id;
+
+-- Problem 9
+SELECT current_day.id
+FROM Weather AS current_day
+WHERE current_day.id IN (
+    SELECT current_day.id
+    FROM Weather AS pre_day
+    WHERE current_day.temperature > pre_day.temperature AND current_day.recordDate = pre_day.recordDate + 1 );
+
+-- Problem 10
+SELECT a.machine_id, ROUND((SELECT AVG(a1.timestamp) FROM Activity a1 where a1.activity_type='end' and a1.machine_id = a.machine_id)-(SELECT AVG(a1.timestamp) FROM Activity a1 where a1.activity_type='start' and a1.machine_id = a.machine_id) ,3) AS processing_time
+FROM Activity a
+GROUP BY a.machine_id;
