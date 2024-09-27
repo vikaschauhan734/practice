@@ -56,3 +56,10 @@ WHERE current_day.id IN (
 SELECT a.machine_id, ROUND((SELECT AVG(a1.timestamp) FROM Activity a1 where a1.activity_type='end' and a1.machine_id = a.machine_id)-(SELECT AVG(a1.timestamp) FROM Activity a1 where a1.activity_type='start' and a1.machine_id = a.machine_id) ,3) AS processing_time
 FROM Activity a
 GROUP BY a.machine_id;
+
+-- Problem 11
+SELECT Employee.name, Bonus.bonus
+FROM Employee
+FULL OUTER Join Bonus
+On Employee.empId = Bonus.empId
+Where Bonus.bonus < 1000 OR Bonus.bonus IS NULL;
