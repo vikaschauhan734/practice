@@ -72,3 +72,13 @@ LEFT JOIN Examinations e
 ON s.student_id = e.student_id AND sub.subject_name = e.subject_name
 GROUP BY s.student_id, s.student_name, sub.subject_name
 ORDER BY s.student_id, sub.subject_name;
+
+-- Problem 13
+SELECT e.name 
+FROM Employee AS e
+RIGHT JOIN (SELECT managerId
+FROM (SELECT managerId, count(managerId) AS ct
+FROM Employee
+GROUP BY managerId) AS subquery
+WHERE ct >= 5) AS d
+ON e.id = d.managerId;
