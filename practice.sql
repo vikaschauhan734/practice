@@ -90,3 +90,9 @@ FROM Signups s
 LEFT JOIN Confirmations c
 ON s.user_id = c.user_id
 GROUP BY s.user_id;
+
+-- Problem 15
+SELECT *
+FROM Cinema
+WHERE id % 2 <> 0 AND NOT description LIKE '%boring%'
+ORDER BY rating DESC
