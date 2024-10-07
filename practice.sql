@@ -129,3 +129,17 @@ SELECT DATE_FORMAT(trans_date, '%Y-%m') AS month, country, COUNT(id) AS trans_co
     SUM(CASE WHEN state = 'approved' THEN amount ELSE 0 END) AS approved_total_amount
 FROM Transactions
 GROUP BY DATE_FORMAT(trans_date, '%Y-%m'), country;
+
+-- Problem 21
+WITH FirstOrders AS (SELECT customer_id, MIN(order_date) AS first_order_date FROM Delivery GROUP BY customer_id),
+FirstOrdersDetails AS (SELECT D.delivery_id, D.customer_id, D.order_date, D.customer_pref_delivery_date,
+           CASE 
+               WHEN D.order_date = D.customer_pref_delivery_date THEN 1
+               ELSE 0
+           END AS is_immediate
+    FROM Delivery D
+    JOIN FirstOrders F
+    ON D.customer_id = F.customer_id AND D.order_date = F.first_order_date
+)
+SELECT ROUND(100.0 * SUM(is_immediate) / COUNT(*), 2) AS immediate_percentage
+FROM FirstOrdersDetails;
