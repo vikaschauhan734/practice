@@ -157,3 +157,9 @@ NextDayLogin AS (SELECT a.player_id
 SELECT ROUND(COUNT(DISTINCT n.player_id) / COUNT(DISTINCT f.player_id), 2) AS fraction
 FROM FirstLogin f
 LEFT JOIN NextDayLogin n ON f.player_id = n.player_id;
+
+
+-- Problem 23
+SELECT teacher_id, COUNT(DISTINCT subject_id) AS cnt
+FROM Teacher
+GROUP BY teacher_id;
