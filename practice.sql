@@ -190,3 +190,9 @@ SELECT user_id, COUNT(follower_id) AS followers_count
 FROM Followers
 GROUP BY user_id
 ORDER BY user_id;
+
+-- Problem 28
+SELECT customer_id
+FROM Customer
+GROUP BY customer_id
+HAVING COUNT(DISTINCT product_key) = (SELECT COUNT(*) FROM Product);
