@@ -204,3 +204,14 @@ JOIN Employees r
 ON e.employee_id = r.reports_to
 GROUP BY e.employee_id, e.name
 ORDER BY e.employee_id;
+
+-- Problem 30
+SELECT employee_id, department_id
+FROM Employee
+WHERE primary_flag = 'Y'
+   OR employee_id IN (
+       SELECT employee_id
+       FROM Employee
+       GROUP BY employee_id
+       HAVING COUNT(*) = 1
+   );
