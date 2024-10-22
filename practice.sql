@@ -247,3 +247,15 @@ SELECT
     ), 10) AS price
 FROM 
     (SELECT DISTINCT product_id FROM Products) p1;
+
+-- Problem 34
+WITH OrderedQueue AS (
+    SELECT person_name, weight, turn, 
+           SUM(weight) OVER (ORDER BY turn) AS cumulative_weight
+    FROM Queue
+)
+SELECT person_name
+FROM OrderedQueue
+WHERE cumulative_weight <= 1000
+ORDER BY turn DESC
+LIMIT 1;
