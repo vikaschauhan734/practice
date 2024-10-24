@@ -261,30 +261,24 @@ ORDER BY turn DESC
 LIMIT 1;
 
 -- Problem 35
-SELECT
-    'Low Salary' AS category,
-    COUNT(*) AS accounts_count
-FROM
-    Accounts
-WHERE
-    income < 20000
-
+SELECT 'Low Salary' AS category, COUNT(*) AS accounts_count
+FROM Accounts
+WHERE income < 20000
 UNION ALL
-
-SELECT
-    'Average Salary' AS category,
-    COUNT(*) AS accounts_count
-FROM
-    Accounts
-WHERE
-    income BETWEEN 20000 AND 50000
-
+SELECT 'Average Salary' AS category, COUNT(*) AS accounts_count
+FROM Accounts
+WHERE income BETWEEN 20000 AND 50000
 UNION ALL
+SELECT 'High Salary' AS category, COUNT(*) AS accounts_count
+FROM Accounts
+WHERE income > 50000;
 
-SELECT
-    'High Salary' AS category,
-    COUNT(*) AS accounts_count
-FROM
-    Accounts
-WHERE
-    income > 50000;
+-- Problem 36
+SELECT e.employee_id
+FROM Employees e
+LEFT JOIN Employees m ON e.manager_id = m.employee_id
+WHERE e.salary < 30000
+  AND e.manager_id IS NOT NULL
+  AND m.employee_id IS NULL
+ORDER BY e.employee_id;
+
