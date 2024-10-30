@@ -292,3 +292,27 @@ SELECT
 FROM Seat
 ORDER BY id;
 
+-- Problem 38
+WITH UserMovieCount AS (
+    SELECT u.name, COUNT(mr.movie_id) AS movie_count
+    FROM Users u
+    JOIN MovieRating mr ON u.user_id = mr.user_id
+    GROUP BY u.name),
+MovieAverageRating AS (
+    SELECT m.title, AVG(mr.rating) AS avg_rating
+    FROM Movies m
+    JOIN MovieRating mr ON m.movie_id = mr.movie_id
+    WHERE mr.created_at BETWEEN '2020-02-01' AND '2020-02-29'
+    GROUP BY m.title)
+
+(SELECT name AS results
+FROM UserMovieCount
+WHERE movie_count = (SELECT MAX(movie_count) FROM UserMovieCount)
+ORDER BY name
+LIMIT 1)
+UNION ALL
+(SELECT title AS results
+FROM MovieAverageRating
+WHERE avg_rating = (SELECT MAX(avg_rating) FROM MovieAverageRating)
+ORDER BY title
+LIMIT 1);
