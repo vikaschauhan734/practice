@@ -316,3 +316,29 @@ FROM MovieAverageRating
 WHERE avg_rating = (SELECT MAX(avg_rating) FROM MovieAverageRating)
 ORDER BY title
 LIMIT 1);
+
+-- Problem 39
+WITH Customer_Totals AS (
+  SELECT
+    visited_on,
+    SUM(amount) AS total_amount
+  FROM
+    Customer
+  GROUP BY
+    visited_on
+)
+
+SELECT
+  c.visited_on,
+  SUM(ct.total_amount) AS amount,
+  ROUND(AVG(ct.total_amount), 2) AS average_amount
+FROM
+  Customer_Totals c
+JOIN
+  Customer_Totals ct ON ct.visited_on BETWEEN DATE_ADD(c.visited_on, INTERVAL -6 DAY) AND c.visited_on
+GROUP BY
+  c.visited_on
+HAVING
+  COUNT(*) = 7
+ORDER BY
+  c.visited_on ASC;
