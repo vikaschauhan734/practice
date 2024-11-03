@@ -352,4 +352,17 @@ ORDER BY user_id;
 -- Problem 41
 SELECT *
 FROM Patients
-WHERE conditions LIKE '%DIAB1%'
+WHERE conditions LIKE '%DIAB1%';
+
+-- Problem 42
+SELECT id, COUNT(*) AS num
+FROM (
+    SELECT requester_id AS id, accepter_id AS friend
+    FROM RequestAccepted
+    UNION ALL
+    SELECT accepter_id AS id, requester_id AS friend
+    FROM RequestAccepted
+) AS Friendships
+GROUP BY id
+ORDER BY num DESC
+LIMIT 1;
