@@ -379,3 +379,12 @@ FROM Person p1
 JOIN Person p2
 ON p1.email = p2.email
 AND p1.id > p2.id;
+
+-- Problem 45
+WITH NumberCounts AS (
+SELECT num, COUNT(num) OVER (PARTITION BY num) AS count_n
+FROM MyNumbers  
+)
+SELECT MAX(num) as num
+FROM NumberCounts
+WHERE count_n = 1;
