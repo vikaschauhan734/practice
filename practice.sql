@@ -388,3 +388,10 @@ FROM MyNumbers
 SELECT MAX(num) as num
 FROM NumberCounts
 WHERE count_n = 1;
+
+-- Problem 46
+SELECT 
+    (SELECT DISTINCT salary 
+     FROM Employee 
+     ORDER BY salary DESC 
+     LIMIT 1 OFFSET 1) AS SecondHighestSalary;
