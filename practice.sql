@@ -412,3 +412,11 @@ GROUP_CONCAT(DISTINCT(product) ORDER BY product ASC) AS products
 FROM Activities
 GROUP BY sell_date
 ORDER BY sell_date;
+
+-- Problem 49
+SELECT p.product_name, SUM(o.unit) AS unit
+FROM Products p
+JOIN Orders o ON p.product_id = o.product_id
+WHERE o.order_date BETWEEN '2020-02-01' AND '2020-02-29'
+GROUP BY p.product_name
+HAVING SUM(o.unit) >= 100;
