@@ -1,0 +1,17 @@
+[
+    {
+      "id": 1,
+      "name": "Anand Singh",
+      "email": "ananad@gmail.com",
+      "age": 30,
+      "purchases": [120.50, 35.99, 89.30]
+    },
+    {
+      "id": 2,
+      "name": "Prem Mehra",
+      "email": "prem@gmail.com",
+      "age": 45,
+      "purchases": [300.00, 22.45]
+    }
+  ]
+  
